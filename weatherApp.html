@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .mapouter {
+          position: relative;
+          text-align: right;
+          width: 400px;
+          height: 400px;
+        }
+        #gmap_canvas {
+          overflow: hidden;
+          background: none !important;
+          width: 400px;
+          height: 400px;
+        }
+        .gmap_iframe {
+          width: 400px !important;
+          height: 400px !important;
+        }
+        #main{
+            height: 120px;
+            /* border: 1px solid black; */
+
+        }
+      </style>
+  </head>
+  <body>
+    City:<input type="text" id="city" />
+    <!-- <input type="text" id="city"> -->
+    <button onclick="getUser()" >Search</button>
+    <!-- <button onclick="getWeather()">Search</button> -->
+
+    <div id="main"></div>
+    <div class="mapouter">
+      <div id="gmap_canvas">
+        
+        <!-- <a href="https://pdflist.com/" alt="pdf"></a> -->
+      </div>
+
+    </div>
+  </body>
+</html>
+<script>
+  // https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+
+  async function getUser() {
+    try {
+      let city = document.getElementById("city").value;
+      let res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=db1ca2389576a5e335b29c11aeac82b8&units=metric`
+      );
+      let data = await res.json();
+      console.log(data);
+      // let user=data.data;
+
+      appendData(data);
+      getWeather();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function appendData(data) {
+    let main = document.getElementById("main");
+
+    let temp = document.createElement("p");
+    temp.innerText = `temprature:${data.main.temp}°C`;
+    let press = document.createElement("p");
+    press.innerText = `pressure:${data.main.pressure}p`;
+
+    let humidity = document.createElement("p");
+    humidity.innerText = `humidity:${data.main.humidity}g m^3`;
+    main.append(temp, press, humidity);
+  }
+
+  function getWeather(){
+let city=document.getElementById("city").value;
+    let map=document.querySelector("#gmap_canvas");
+  map.innerHTML=`<iframe
+          class="gmap_iframe"
+          frameborder="0"
+          scrolling="no"
+          marginheight="0"
+          marginwidth="0"
+          src="https://maps.google.com/maps?width=400&amp;height=400&amp;hl=en&amp;q=${city}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+        ></iframe>`
+  }
+
+</script>
