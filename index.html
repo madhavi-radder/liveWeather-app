@@ -24,16 +24,23 @@
         }
         #main{
             height: 120px;
-            /* border: 1px solid black; */
+            /* margin-left: 120px; */
+        }
 
+        #search{
+          /* text-align: center; */
         }
       </style>
   </head>
   <body>
-    City:<input type="text" id="city" />
+
+    <div id="search">
+      <h1>Weather App</h1>
+      City:<input type="text" id="city" />
     <!-- <input type="text" id="city"> -->
-    <button onclick="getUser()" >Search</button>
+      <button onclick="getUser()" >Search</button>
     <!-- <button onclick="getWeather()">Search</button> -->
+    </div>
 
     <div id="main"></div>
     <div class="mapouter">
@@ -69,12 +76,12 @@
     let main = document.getElementById("main");
 
     let temp = document.createElement("p");
-    temp.innerText = `temprature:${data.main.temp}°C`;
+    temp.innerText = `Temprature:- ${data.main.temp}°C`;
     let press = document.createElement("p");
-    press.innerText = `pressure:${data.main.pressure}p`;
+    press.innerText = `Pressure:- ${data.main.pressure}p`;
 
     let humidity = document.createElement("p");
-    humidity.innerText = `humidity:${data.main.humidity}g m^3`;
+    humidity.innerText = `Humidity:- ${data.main.humidity}g m^3`;
     main.append(temp, press, humidity);
   }
 
